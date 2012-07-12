@@ -19,7 +19,8 @@ CFLAGS= -fPIC -Wall
 LDFLAGS = -L../lib
 LDLIBS= -li2c_wrapper
 
-all: deps.d $(TARGETS) accel_test battery_test
+#all: deps.d $(TARGETS) accel_test battery_test
+all: deps.d $(TARGETS) 
 
 $(STATIC_LIB): $(OBJECTS)
 	ar rcs $@ $^
@@ -41,7 +42,8 @@ battery_test:
 
 clean:
 	rm -rf $(OBJECTS) deps.d
-	rm -rf $(TARGETS) *.a *.o ../libs/*.a 
+	rm -rf $(TARGETS) *.a *.o ../lib/*.a 
 	rm -f ../bin/battery_test
+	rm -f ../bin/accel_test
 
 -include deps.d
