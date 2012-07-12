@@ -2,4 +2,3 @@ bin
 *.o
 deps.d
 *.a
-lib
