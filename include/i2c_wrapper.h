@@ -12,6 +12,9 @@
 #ifndef I2C_WRAPPER_H
 #define I2C_WRAPPER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdlib.h>
 #include <linux/i2c-dev.h>
@@ -34,5 +37,9 @@ int i2c_compatability_test(int file, int size, int pec);
 
 // address name is something like "0x1d"
 int i2c_pick_slave(int file, const char* address_name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //I2C_WRAPPER_H
