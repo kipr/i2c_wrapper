@@ -8,7 +8,7 @@ SET(SRC ${i2c_wrapper_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${INCLUDE})
 
 FILE(GLOB INCLUDES ${INCLUDE}/*.h)
-FILE(GLOB SOURCES ${SRC}/*.c)
+FILE(GLOB SOURCES ${SRC}/check_funcs.c ${SRC}/i2c_wrapper.c ${SRC}/i2cbusses.c)
 
 SET(CMAKE_CXX_FLAGS "-Wall")
 
