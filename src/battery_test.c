@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 	//}	
 
 	// adcChan = 8;
-	unsigned char adc_chan_sel = 3;
+	unsigned char adc_chan_sel = 8;
 	unsigned char adc_chan = 0; 
 
     //adcChan = kovanGet('adc_chan')
@@ -136,7 +136,7 @@ int main(int argc, char** argv){
 		unsigned char low = i2c_read_byte(file, 0x81); //TODO 82?
 		unsigned short volt_raw = (high << 8) | low;
 
-		if((c%100)==0)printf("raw 10bit adc back_emf reading = %d\n",volt_raw);	
+		if((c%100)==0)printf("raw 10bit battery reading = %d\n",volt_raw);
 	}
 
 	//	accels[i] =  i2c_read_byte(file,  6 + i);
