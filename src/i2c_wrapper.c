@@ -20,40 +20,34 @@
 #include "check_funcs.h" // check_funcs()
 
 
-int i2c_open_device(const char* i2c_bus_name, char *filename, size_t size, int quiet){
-
+int i2c_open_device(const char* i2c_bus_name, char *filename, size_t size, int quiet)
+{
 	int i2cbus = lookup_i2c_bus(i2c_bus_name);
 	int file = open_i2c_dev(i2cbus, filename, size, quiet);
-
 	
-	printf("i2cbus=%d and dev=%s\n",i2cbus,filename);
+	if(!quiet) printf("i2cbus=%d and dev=%s\n",i2cbus,filename);
 
 	return file;
 }
 
 
-unsigned char i2c_read_byte(int file, int daddress){
-
-	unsigned char res = i2c_smbus_read_byte_data(file, daddress);
-	
-	return res;
+unsigned char i2c_read_byte(int file, int daddress)
+{
+	return i2c_smbus_read_byte_data(file, daddress);
 }
 
 
-void i2c_close_device(int file){
+void i2c_close_device(int file)
+{
 	close(file);
 }
 
-
 //TODO: value is only a byte (unsigned char or __u8)
-int i2c_write_byte(int file, unsigned char daddress, unsigned char value, int readback){
+int i2c_write_byte(int file, unsigned char daddress, unsigned char value, int readback)
+{
+	int res = i2c_smbus_write_byte_data(file, daddress,value);
 
-	int res;
-
-
-	res = i2c_smbus_write_byte_data(file, daddress,value);
-
-	if(readback){
+	if(readback) {
 		res = i2c_smbus_read_byte_data(file, daddress);
 
 		if (res < 0) {
@@ -63,8 +57,6 @@ int i2c_write_byte(int file, unsigned char daddress, unsigned char value, int re
 			printf("Warning - data mismatch - wrote "
 				   "0x%0*x, read back 0x%0*x\n", 2, value, 2, res);
 			return -1;
-		} else {
-			printf("Value 0x%0*x written, readback matched\n", 2, value);
 		}
 	}
 
@@ -75,10 +67,10 @@ int i2c_write_byte(int file, unsigned char daddress, unsigned char value, int re
 /** wrapper for check_funcs, a common function in i2c-tools
  *  can short-circuit as an error if the i2c bus isn't open
  */
-int i2c_compatability_test(int file, int size, int pec){
-
+int i2c_compatability_test(int file, int size, int pec)
+{
 	// error
-	if (file < 0 || check_funcs(file, size, pec))  return -1;
+	if (file < 0 || check_funcs(file, size, pec)) return -1;
 
 	// success   
 	return 0;
@@ -86,7 +78,8 @@ int i2c_compatability_test(int file, int size, int pec){
 
 
 // address name is something like "0x1d"
-int i2c_pick_slave(int file, const char* address_name){
+int i2c_pick_slave(int file, const char* address_name)
+{
 	int address = parse_i2c_address(address_name);
 	return set_slave_addr(file, address, 0); // don't force
 }
